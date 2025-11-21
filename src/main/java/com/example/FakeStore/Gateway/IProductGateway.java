@@ -6,4 +6,5 @@ import com.example.FakeStore.DTO.ProductDTO;
 
 public interface IProductGateway {
    List<ProductDTO> getAllProduct() throws IOException;
+   ProductDTO getProductById(Long id) throws IOException;
 }
