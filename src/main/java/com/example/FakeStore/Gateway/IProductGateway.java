@@ -7,4 +7,7 @@ import com.example.FakeStore.DTO.ProductDTO;
 public interface IProductGateway {
    List<ProductDTO> getAllProduct() throws IOException;
    ProductDTO getProductById(Long id) throws IOException;
+   ProductDTO addProduct(ProductDTO productDTO) throws IOException;
+   ProductDTO updateProduct(Long id, ProductDTO productDTO) throws IOException;
+   Boolean deleteProductById(Long id) throws IOException;
 }

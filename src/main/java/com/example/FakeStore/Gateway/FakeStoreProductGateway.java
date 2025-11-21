@@ -40,5 +40,39 @@ public class FakeStoreProductGateway implements IProductGateway{
         }
         return product;
     }
+
+
+    @Override
+    public ProductDTO addProduct(ProductDTO productDTO) throws IOException {
+        log.info("Calling the Api of the fakeStore to add product: {}", productDTO);
+        var response = fakeStoreProductApi.addProduct(productDTO).execute();
+        if (!response.isSuccessful()) {
+            log.error("Failed to add product. Response code: {}", response.code());
+            throw new IOException("Failed to add product: HTTP " + response.code());
+        }
+        return response.body();
+    }
+
+    @Override
+    public ProductDTO updateProduct(Long id, ProductDTO productDTO) throws IOException {
+        log.info("Calling the Api of the fakeStore to update product with id: {}", id);
+        var response = fakeStoreProductApi.updateProduct(id, productDTO).execute();
+        if (!response.isSuccessful()) {
+            log.error("Failed to update product with id: {}. Response code: {}", id, response.code());
+            throw new IOException("Failed to update product: HTTP " + response.code());
+        }
+        return response.body();
+    }
+
+    @Override
+    public Boolean deleteProductById(Long id) throws IOException {
+        log.info("Calling the Api of the fakeStore to delete product with id: {}", id);
+        var response = fakeStoreProductApi.deleteProduct(id).execute();
+        if (!response.isSuccessful()) {
+            log.error("Failed to delete product with id: {}. Response code: {}", id, response.code());
+            throw new IOException("Failed to delete product: HTTP " + response.code());
+        }
+        return response.isSuccessful();
+    }
     
 }

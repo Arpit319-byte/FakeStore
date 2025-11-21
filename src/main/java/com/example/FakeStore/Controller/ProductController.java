@@ -46,23 +46,31 @@ public class ProductController {
 
 
     @PostMapping
-    public ResponseEntity<String> addProduct(@RequestBody ProductDTO productDTO){
+    public ResponseEntity<ProductDTO> addProduct(@RequestBody ProductDTO productDTO) throws IOException{
         log.info("Adding the Product "+productDTO.toString()+" in the FakeStore");
-        return ResponseEntity.ok("Created succesfully");
+        return ResponseEntity.ok(iProductService.addProductDTO(productDTO));
     }
 
 
     @PutMapping("/{id}")
-    public ResponseEntity<String> updateProductById(@RequestBody ProductDTO productDTO,@PathVariable Long id){
+    public ResponseEntity<ProductDTO> updateProductById(@RequestBody ProductDTO productDTO,@PathVariable Long id) throws IOException{
            log.info("Updating the Product with id->"+id+" with updated value ProductDTO->"+productDTO.toString());
-           return ResponseEntity.ok("Updated Successfully");
+           ProductDTO existingProduct = iProductService.getProductById(id);
+           if(existingProduct != null){
+               return ResponseEntity.ok(iProductService.updateProduct(id, productDTO));
+           }
+           return ResponseEntity.notFound().build();
     }
 
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<String> deleteProductById(@PathVariable Long id){
+    public ResponseEntity<Boolean> deleteProductById(@PathVariable Long id)throws IOException{
         log.info("Deleting the Product with the id->"+id);
-        return ResponseEntity.ok("Deleted Successfully");
+        if(iProductService.getProductById(id)!=null){
+            log.info(" Product with the id->"+id+" is present and deleting that Product");
+           return ResponseEntity.ok(iProductService.deleteProductById(id));
+        }
+        return ResponseEntity.notFound().build();
     }
 
     
