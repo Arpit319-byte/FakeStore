@@ -2,6 +2,8 @@ package com.example.FakeStore.DTO;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -14,8 +16,10 @@ import lombok.Setter;
 @Builder
 @Getter
 @Setter
-public class FakeStoreResponseDTO {
-    private String status;
-    private String message;
-    private List<ProductDTO> product;
+public class CartDTO {
+    private Integer id;
+    private Integer userId;
+    
+    @JsonProperty("products")
+    private List<ProductDTO> products;
 }
