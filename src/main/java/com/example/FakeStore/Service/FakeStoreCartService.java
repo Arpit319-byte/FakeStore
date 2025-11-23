@@ -3,8 +3,8 @@ package com.example.FakeStore.Service;
 import java.io.IOException;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
-
 import com.example.FakeStore.DTO.CartDTO;
 import com.example.FakeStore.Gateway.ICartGateway;
 
@@ -16,7 +16,7 @@ public class FakeStoreCartService implements ICartService {
 
     private final ICartGateway iCartGateway;
 
-    public FakeStoreCartService(ICartGateway _iCartGateway)  throws IOException{
+    public FakeStoreCartService(@Qualifier("fakeStoreCartRestClient") ICartGateway _iCartGateway)  throws IOException{
         log.info("Adding the ICartGateway dependency for the FakeStoreCartService");
         this.iCartGateway = _iCartGateway;
     }
